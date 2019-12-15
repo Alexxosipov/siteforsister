@@ -2,7 +2,7 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require('path');
-
+const webpack = require('webpack');
 module.exports = {
   entry: [
     './src/app.js',
@@ -14,7 +14,7 @@ module.exports = {
   },
   module: {
     rules: [{
-        test: /\.(woff2)$/,
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url-loader",
       },
       {
@@ -67,6 +67,17 @@ module.exports = {
       // template is the name of the source file
       filename: './index.html',
       template: './index.html'
+    }),
+    new webpack.ProvidePlugin({
+      $: "jquery/dist/jquery.min.js",
+      jQuery: "jquery/dist/jquery.min.js",
+      "window.jQuery": "jquery/dist/jquery.min.js"
     })
-  ]
+  ],
+  devServer: {
+    contentBase: path.join(__dirname, 'dist'),
+    compress: true,
+    port: 9000
+  }
 };
+

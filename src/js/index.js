@@ -1,44 +1,16 @@
-(() => {
-  const div = document.createElement("div");
+var $ = require('jquery')
 
-  div.style.width = '330px'
-  div.style.height = '3rem'
-  div.style.textAlign = 'left'
-  div.style.backgroundColor = '#eee'
-  div.style.padding = '.65rem 1rem 1rem 1rem'
-  div.style.display = 'flex'
-  div.style.alignItems = 'center'
-  document.body.appendChild(div)
+import initGallery from './gallery'
 
-  const messages = [
-    'Technologies:',
-    'Webpack',
-    'Babel',
-    'Sass',
-    'PostCss',
-    '',
-  ]
 
-  let date = new Date().getTime()
-  let currentMessage = 0
 
-  const render = () => {
-    const newDate = new Date().getTime()
+$('.portfolio__tab').click(function(e){
+    e.preventDefault();
+    $('.portfolio__tab').removeClass('portfolio__tab-active');
+    $(this).addClass('portfolio__tab-active');
+    $('.portfolio__items').hide();
+    $('.portfolio__items-' + $(this).attr('data-items')).css('display', 'flex');
+    initGallery('.portfolio__items');
+});
 
-    if (newDate - date > 1000) {
-
-      div.innerHTML = messages[currentMessage]
-      currentMessage += 1
-      date = newDate
-
-      if (currentMessage === messages.length) {
-        currentMessage = 0
-      }      
-    }
-
-    requestAnimationFrame(render)
-  }
-
-  render()
-
-})()
+initGallery('.portfolio__items')
